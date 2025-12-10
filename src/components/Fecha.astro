@@ -1,0 +1,245 @@
+---
+// =============================================================================
+// InvitacionSection.astro - Sección de Invitación Formal
+// =============================================================================
+// Este componente muestra la invitación formal con el texto y detalles del evento
+// =============================================================================
+
+// ✏️ CONFIGURACIÓN EDITABLE
+const config = {
+  // Ruta de la imagen de fondo
+  imagenFondo: "/imagenes/fondo2.webp",
+  imagenCorona: "/imagenes/coronaRoja.png",
+  
+  // Textos principales
+  tituloInvitacion: "Tenemos el agrado de invitarles a mis Quince.",
+  fecha: {
+    dia: "28",
+    mes: "Diciembre",
+    diaSemana: "Domingo",
+    año: "2025"
+  },
+  
+  // Mensaje personal
+  mensajePersonal: "¡Llegó el día tan soñado de Mis 15 años, atesoro en mi corazón los recuerdos de mi infancia y con amor y la bendición de Dios, estoy lista para esta nueva etapa.",
+  
+  // Padres
+  tituloPadres: "En compañía de mis Padres",
+  padres: [
+    "",
+    ""
+  ],
+  
+  // Textos alternativos para accesibilidad
+  altImagen: "Fondo elegante de invitación",
+  altCorona: "Corona decorativa"
+};
+---
+
+<!-- =============================================================================
+  ESTRUCTURA DEL COMPONENTE
+  - Contenedor con imagen de fondo
+  - Contenido centrado con todos los detalles
+  - Animaciones GSAP de entrada
+============================================================================= -->
+
+<section 
+  class="relative w-full min-h-screen flex  justify-center  px-4 overflow-hidden"
+  aria-label="Invitación formal"
+>
+  
+  <!-- ========================================
+    IMAGEN DE FONDO CON OVERLAY
+  ======================================== -->
+  <div class="invitacion-bg absolute inset-0 z-0 opacity-0">
+    <img 
+      src={config.imagenFondo}
+      alt={config.altImagen}
+      class="w-full h-full object-cover scale-110 translate-x-4 translate-y-4" 
+      loading="lazy"
+    />
+    
+    <!-- Overlay claro para mejorar legibilidad -->
+    <div class="absolute inset-0"></div>
+  </div>
+
+  <!-- ========================================
+    CONTENIDO PRINCIPAL
+  ======================================== -->
+  <div class="invitacion-content relative z-10 max-w-2xl mx-auto text-center opacity-0" style="transform: translateY(30px);">
+    
+    <!-- ========================================
+      CORONA DECORATIVA
+    ======================================== -->
+    <div class="w-20 h-20 mt-20 md:w-24 md:h-24 mx-auto mb-2">
+      <img 
+        src={config.imagenCorona}
+        alt={config.altCorona}
+        class="w-full h-full object-contain"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- ========================================
+      TÍTULO DE INVITACIÓN
+    ======================================== -->
+    <h2 
+      class="font-great-vibes text-3xl md:text-4xl lg:text-5xl text-[#7B1E3A] mb-2 leading-relaxed"
+    >
+      {config.tituloInvitacion}
+    </h2>
+
+    <!-- ========================================
+      FECHA DEL EVENTO
+      - Diseño con líneas decorativas
+    ======================================== -->
+    <div class="fecha-container relative max-w-md mx-auto mb-2" id="fecha-evento">
+      <div class="flex items-center justify-center gap-4 md:gap-6">
+        <!-- DÍA DE LA SEMANA con líneas arriba y abajo - ANCHO FIJO -->
+        <div class="flex flex-col items-center w-24 md:w-28">
+          <div class="w-full h-px bg-[#7B1E3A] mb-2"></div>
+          <span
+            class="font-charm text-xl md:text-lg text-[#7B1E3A] uppercase tracking-wider font-bold text-center"
+          >
+            {config.fecha.diaSemana}
+          </span>
+          <div class="w-full h-px bg-[#7B1E3A] mt-2"></div>
+        </div>
+        
+        <!-- Número DÍA - CENTRADO -->
+        <div class="flex items-center justify-center min-w-[80px] md:min-w-[100px]">
+          <span class="font-charm text-7xl md:text-8xl text-[#7B1E3A] font-bold -ml-1">
+            {config.fecha.dia}
+          </span>
+        </div>
+        
+        <!-- MES con líneas arriba y abajo - ANCHO FIJO -->
+        <div class="flex flex-col items-center w-24 md:w-28">
+          <div class="w-full h-px bg-[#7B1E3A] mb-2"></div>
+          <span
+            class="font-charm text-xl md:text-lg text-[#7B1E3A] uppercase tracking-wider font-bold text-center"
+          >
+            {config.fecha.mes}
+          </span>
+          <div class="w-full h-px bg-[#7B1E3A] mt-2"></div>
+        </div>
+      </div>
+      
+      <!-- Año - MOVIDO CON TRANSLATE -->
+      <div class="mt-2 flex justify-center" id="anio-evento">
+        <p class="font-charm text-3xl md:text-4xl text-[#7B1E3A] font-bold -translate-x-2">
+          {config.fecha.año}
+        </p>
+      </div>
+    </div>
+
+    <!-- ========================================
+      MENSAJE PERSONAL
+    ======================================== -->
+    <div class="mensaje-personal mb-4 px-4">
+      <p class="font-charm text-xl md:text-lg text-gray-800 leading-relaxed">
+        {config.mensajePersonal}
+      </p>
+    </div>
+
+    <!-- ========================================
+      PADRES
+    ======================================== -->
+    <div class="padres-section">
+      <h3 class="font-great-vibes text-3xl md:text-3xl text-[#7B1E3A] mb-4">
+        {config.tituloPadres}
+      </h3>
+      <div class="space-y-2">
+        {config.padres.map(padre => (
+          <p class="font-crimson text-lg md:text-xl text-gray-800 font-medium">
+            {padre}
+          </p>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =============================================================================
+  ESTILOS PERSONALIZADOS
+============================================================================= -->
+<style>
+  /* Sombras sutiles para mejorar legibilidad */
+  .invitacion-content h2,
+  .invitacion-content h3 {
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+  }
+
+  /* Animación suave para la fecha circular */
+  .fecha-container {
+    filter: drop-shadow(0 2px 8px rgba(123, 30, 58, 0.15));
+  }
+
+  /* Ajustes para dispositivos móviles */
+  /* @media (max-width: 640px) {
+    .mensaje-personal p {
+      font-size: 0.95rem;
+    }
+  } */
+</style>
+
+<!-- =============================================================================
+  ANIMACIONES CON GSAP
+============================================================================= -->
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // =========================================================
+  // ANIMACIÓN DE ENTRADA AL HACER SCROLL
+  // =========================================================
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    // Fade in del fondo
+    gsap.to('.invitacion-bg', {
+      opacity: 1,
+      duration: 1,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '.invitacion-bg',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    });
+
+    // Animación del contenido principal
+    gsap.to('.invitacion-content', {
+      y: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.invitacion-content',
+        start: 'top 75%',
+        toggleActions: 'play none none none'
+      }
+    });
+
+    // Animación especial para la fecha circular
+    gsap.fromTo('.fecha-container',
+      {
+        scale: 0.8,
+        opacity: 0
+      },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'back.out(1.5)',
+        scrollTrigger: {
+          trigger: '.fecha-container',
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  });
+</script>

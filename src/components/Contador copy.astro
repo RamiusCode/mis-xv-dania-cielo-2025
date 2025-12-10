@@ -1,0 +1,221 @@
+---
+// =============================================================================
+// ContadorSection.astro - Sección de Contador con fondo animado como HeroSection
+// =============================================================================
+// Este componente replica EXACTAMENTE el efecto de fondo de HeroSection.astro:
+// fade-in + zoom + parallax suave + overlay
+// =============================================================================
+
+const config = {
+  imagenFondo: "/imagenes/fondo3.webp",
+  textoDecorativo: "Solo Faltan",
+  fechaEvento: "2025-12-28T17:00:00",
+  altImagen: "Fondo elegante para contador",
+  etiquetas: {
+    dias: "DÍAS",
+    horas: "HORAS",
+    minutos: "MINUTOS",
+    segundos: "SEGUNDOS"
+  }
+};
+---
+
+<section 
+  class="relative w-full h-screen flex items-center justify-center overflow-hidden"
+  aria-label="Contador regresivo"
+  id="contador-section"
+>
+  
+  <!-- ✨ FONDO CON MISMO EFECTO QUE HeroSection ✨ -->
+  <div class="hero-bg absolute inset-0 z-0 opacity-0">
+    <img 
+      src={config.imagenFondo}
+      alt={config.altImagen}
+      class="w-full h-full object-cover"
+      loading="lazy"
+    />
+    <!-- Overlay idéntico -->
+    <div class="absolute inset-0 bg-black/40"></div>
+  </div>
+
+  <!-- CONTENIDO DEL CONTADOR (centrado, sobre el fondo) -->
+  <div class="relative z-10 w-full max-w-md mx-auto px-6 text-center">
+    
+    <h2 
+      class="font-great-vibes text-4xl md:text-5xl lg:text-6xl text-white mb-8 drop-shadow-lg opacity-0"
+      style="transform: translateY(30px);"
+      id="texto-decorativo"
+    >
+      {config.textoDecorativo}
+    </h2>
+
+    <div 
+      class="contador-grid grid grid-cols-4 gap-3 md:gap-4 opacity-0"
+      style="transform: translateY(40px);"
+      id="contador-grid"
+    >
+      <!-- DÍAS -->
+      <div class="contador-item">
+        <div class="bg-white/10 backdrop-blur-md rounded-lg p-4 md:p-5 border border-white/20 shadow-xl">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2 font-charm" id="dias">00</div>
+          <div class="text-xs md:text-sm text-white/90 font-medium tracking-wider font-charm">{config.etiquetas.dias}</div>
+        </div>
+      </div>
+
+      <!-- HORAS -->
+      <div class="contador-item">
+        <div class="bg-white/10 backdrop-blur-md rounded-lg p-4 md:p-5 border border-white/20 shadow-xl">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2 font-charm" id="horas">00</div>
+          <div class="text-xs md:text-sm text-white/90 font-medium tracking-wider font-charm">{config.etiquetas.horas}</div>
+        </div>
+      </div>
+
+      <!-- MINUTOS -->
+      <div class="contador-item">
+        <div class="bg-white/10 backdrop-blur-md rounded-lg p-4 md:p-5 border border-white/20 shadow-xl">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2 font-charm" id="minutos">00</div>
+          <div class="text-xs md:text-sm text-white/90 font-medium tracking-wider font-charm">{config.etiquetas.minutos}</div>
+        </div>
+      </div>
+
+      <!-- SEGUNDOS -->
+      <div class="contador-item">
+        <div class="bg-white/10 backdrop-blur-md rounded-lg p-4 md:p-5 border border-white/20 shadow-xl">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2 font-charm" id="segundos">00</div>
+          <div class="text-xs md:text-sm text-white/90 font-medium tracking-wider font-charm">{config.etiquetas.segundos}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Efecto de pulso en números */
+  @keyframes pulse-number {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  #dias, #horas, #minutos, #segundos {
+    animation: pulse-number 1s ease-in-out infinite;
+  }
+
+  /* Sombras para mejor contraste */
+  .contador-item {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+  }
+
+  @media (max-width: 640px) {
+    .contador-item {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<!-- ✅ SCRIPT COPIADO Y ADAPTADO DE HeroSection.astro -->
+<script>
+  import { gsap } from 'gsap';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // =========================================================
+    // TIMELINE PRINCIPAL - MISMO ESTILO QUE HeroSection
+    // =========================================================
+    const tl = gsap.timeline({ 
+      defaults: { 
+        ease: 'power3.out' 
+      } 
+    });
+
+    // --- Fade in y zoom del fondo (¡idéntico!) ---
+    tl.to('.hero-bg', {
+      opacity: 1,
+      duration: 1.5,
+      ease: 'power2.out'
+    }, 0);
+
+    tl.fromTo('.hero-bg img',
+      { scale: 1.1 },
+      { 
+        scale: 1, 
+        duration: 2, 
+        ease: 'power2.out' 
+      }
+    , 0);
+
+    // --- Animación del texto decorativo ---
+    tl.to('#texto-decorativo', {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 1.5,
+      ease: 'power4.out'
+    }, 0);
+
+    // --- Animación del grid del contador ---
+    tl.to('#contador-grid', {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 1.2,
+      ease: 'back.out(1.2)'
+    }, 0);
+
+    // =========================================================
+    // PARALLAX - ¡EXACTAMENTE IGUAL QUE EN HeroSection!
+    // =========================================================
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.scrollY;
+          const heroImage = document.querySelector('.hero-bg img');
+          
+          // Aplicar parallax solo mientras esté en la sección visual
+          if (heroImage && scrolled < window.innerHeight) {
+            gsap.to(heroImage, {
+              y: scrolled * 0.5,
+              duration: 0.5,
+              ease: 'power1.out'
+            });
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // =========================================================
+    // CONTADOR REGRESIVO
+    // =========================================================
+    const fechaEvento = new Date(config.fechaEvento).getTime();
+
+    function actualizarContador() {
+      const ahora = new Date().getTime();
+      const diferencia = fechaEvento - ahora;
+
+      if (diferencia > 0) {
+        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+        const update = (id, value) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = String(value).padStart(2, "0");
+        };
+
+        update("dias", dias);
+        update("horas", horas);
+        update("minutos", minutos);
+        update("segundos", segundos);
+      } else {
+        ["dias", "horas", "minutos", "segundos"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = "00";
+        });
+      }
+    }
+
+    actualizarContador();
+    setInterval(actualizarContador, 1000);
+  });
+</script>

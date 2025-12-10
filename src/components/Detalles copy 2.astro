@@ -1,0 +1,213 @@
+---
+// =============================================================================
+// DetallesEvento.astro - Sección de Detalles del Evento (Hora, Dirección, Vestimenta)
+// =============================================================================
+// Usa el mismo fondo y estilo que la invitación original, pero con nuevo contenido.
+// =============================================================================
+
+// ✏️ CONFIGURACIÓN EDITABLE
+const config = {
+  // Ruta de la imagen de fondo (mismo que antes)
+  imagenFondo: "/imagenes/fondo2.webp",
+  
+  // HORA
+  horaTitulo: "Recepción Social",
+  recepcionTipo: "Desde las",
+  hora: "17:00 horas",
+  iconoHora: "/imagenes/reloj.png",
+
+  // DIRECCIÓN
+  direccionTitulo: "Dirección",
+  iconoDireccion: "/imagenes/direccion.png",
+  imagenDireccion: "/imagenes/direccion.png",
+  direccion: "Avenida Circunvalación y Francisco Quevedo (zona norte)",
+  enlaceMaps: "https://maps.app.goo.gl/TU_ENLACE",
+
+  // CÓDIGO DE VESTIMENTA
+  vestimentaTitulo: "CÓDIGO DE VESTIMENTA",
+  iconoVestimenta: "/imagenes/icono-ropa.svg",
+  vestimenta: "Formal",
+  advertencia: "Los colores rojo y dorado están reservados exclusivamente para la quinceañera.",
+
+  // Textos alternativos
+  altImagen: "Fondo elegante de invitación",
+  altIconoHora: "Icono de reloj",
+  altIconoDireccion: "Icono de ubicación",
+  altIconoVestimenta: "Icono de vestimenta"
+};
+---
+
+<section 
+  class="relative w-full min-h-screen flex items-center justify-center py-16 px-4 overflow-hidden"
+  aria-label="Detalles del evento"
+>
+  
+  <!-- ========================================
+    IMAGEN DE FONDO CON OVERLAY
+  ======================================== -->
+  <div class="invitacion-bg absolute inset-0 z-0 opacity-0">
+    <img 
+      src={config.imagenFondo}
+      alt={config.altImagen}
+      class="w-full h-full object-cover" 
+      loading="lazy"
+    />
+    <div class="absolute inset-0"></div>
+  </div>
+
+  <!-- ========================================
+    CONTENIDO PRINCIPAL
+  ======================================== -->
+  <div class="invitacion-content relative z-10 max-w-2xl mx-auto text-center opacity-0" style="transform: translateY(30px);">
+
+    <!-- ========================================
+      1. HORA
+    ======================================== -->
+    <div class="mb-12">
+      <h3 class="font-great-vibes text-3xl md:text-4xl text-[#7B1E3A] mb-6">
+        {config.horaTitulo}
+      </h3>
+      
+      <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+        <div class="bg-white/30 rounded-full backdrop-blur-sm">
+          <img 
+            src={config.iconoHora}
+            alt={config.altIconoHora}
+            class="w-12 h-12 md:w-16 md:h-16"
+            loading="lazy"
+          />
+        </div>
+        <div class="text-center md:text-left">
+          <p class="font-charm text-xl md:text-2xl text-gray-800 mb-1">
+            {config.recepcionTipo}
+          </p>
+          <p class="font-charm text-3xl md:text-4xl text-[#7B1E3A] font-bold">
+            {config.hora}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================
+      2. DIRECCIÓN
+    ======================================== -->
+    <div class="mb-12">
+      <h3 class="font-great-vibes text-3xl md:text-4xl text-[#7B1E3A] mb-6">
+        {config.direccionTitulo}
+      </h3>
+      
+      <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+        <div class="bg-white/30  rounded-full backdrop-blur-sm">
+          <img 
+            src={config.iconoDireccion}
+            alt={config.altIconoDireccion}
+            class="w-12 h-12 md:w-16 md:h-16"
+            loading="lazy"
+          />
+        </div>
+        <div class="flex-1 text-center md:text-left">
+          <p class="font-charm text-lg md:text-xl text-gray-800 mb-4 max-w-md mx-auto md:mx-0">
+            {config.direccion}
+          </p>
+          <a 
+            href={config.enlaceMaps}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block bg-[#7B1E3A] hover:bg-[#5a162b] text-white font-charm text-base md:text-lg py-2 px-6 rounded-full transition-colors duration-300"
+          >
+            Ver Ubicación
+          </a>
+        </div>
+        <div class="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden border-2 border-[#7B1E3A]/30 shadow-lg">
+          <img 
+            src={config.imagenDireccion}
+            alt="Lugar de recepción"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================
+      3. CÓDIGO DE VESTIMENTA
+    ======================================== -->
+    <div>
+      <h3 class="font-great-vibes text-3xl md:text-4xl text-[#7B1E3A] mb-6">
+        {config.vestimentaTitulo}
+      </h3>
+      
+      <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+        <div class="bg-white/30 p-4 rounded-full backdrop-blur-sm">
+          <img 
+            src={config.iconoVestimenta}
+            alt={config.altIconoVestimenta}
+            class="w-12 h-12 md:w-16 md:h-16"
+            loading="lazy"
+          />
+        </div>
+        <div class="text-center md:text-left max-w-lg">
+          <p class="font-charm text-3xl md:text-4xl text-[#7B1E3A] font-bold mb-3">
+            {config.vestimenta}
+          </p>
+          <p class="font-charm text-base md:text-lg text-gray-800 italic bg-white/40 p-3 rounded-lg border-l-4 border-[#7B1E3A]">
+            {config.advertencia}
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .invitacion-content h2,
+  .invitacion-content h3 {
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+  }
+
+  /* Ajustes para dispositivos móviles */
+  @media (max-width: 640px) {
+    .invitacion-content {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+  }
+</style>
+
+<!-- =============================================================================
+  ANIMACIONES CON GSAP
+============================================================================= -->
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Fade in del fondo
+    gsap.to('.invitacion-bg', {
+      opacity: 1,
+      duration: 1,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '.invitacion-bg',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    });
+
+    // Contenido principal
+    gsap.to('.invitacion-content', {
+      y: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.invitacion-content',
+        start: 'top 75%',
+        toggleActions: 'play none none none'
+      }
+    });
+  });
+</script>

@@ -1,0 +1,370 @@
+---
+import Reproductor from '../components/Reproductor.astro';
+// =============================================================================
+// HeroSection.astro - Sección Hero Principal para XV Años
+// =============================================================================
+// Este componente muestra la imagen principal con el nombre de la quinceañera
+// y la fecha del evento con animaciones GSAP
+// =============================================================================
+
+// ✏️ CONFIGURACIÓN EDITABLE
+const config = {
+  // Ruta de la imagen principal
+  imagenPrincipal: "/imagenes/fotoPrincipal.webp",
+  imagenCorona: "/imagenes/coronaBlanca.png",
+  
+  // Textos principales
+  titulo: "MIS XV AÑOS",
+  nombreQuinceañera: "Dania Cielo",
+  fecha: "Domingo 28 de Diciembre",
+  
+  // Textos alternativos para accesibilidad
+  altImagen: "Imagen Quinceañera",
+  altCorona: "Corona blanca decorativa"
+};
+---
+
+<!-- =============================================================================
+  ESTRUCTURA DEL COMPONENTE
+  - Contenedor principal con altura completa de pantalla
+  - Imagen de fondo con overlay oscuro
+  - Contenido centrado con textos y fecha
+  - Indicador de scroll animado
+============================================================================= -->
+
+<section 
+  class="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden"
+  aria-label="Portada de la invitación"
+>
+  
+  <!-- ========================================
+    IMAGEN DE FONDO CON OVERLAY
+    - Imagen responsive que cubre toda la sección
+    - Overlay oscuro para mejorar legibilidad del texto
+  ======================================== -->
+  <div class="hero-bg absolute inset-0 z-0 opacity-0">
+    <img 
+      src={config.imagenPrincipal}
+      alt={config.altImagen}
+      class="w-full h-full object-cover"
+      loading="eager"
+    />
+    
+    <!-- Overlay oscuro semitransparente -->
+    <div class="hero-overlay absolute inset-0 bg-black/40"></div>
+  </div>
+
+  <!-- ========================================
+    CONTENIDO PRINCIPAL
+    - Distribución vertical centrada
+    - Corona decorativa arriba
+    - Títulos en el centro
+    - Fecha en la parte inferior
+  ======================================== -->
+  <div class="relative z-10 text-center px-4 flex flex-col items-center h-full">
+    
+    <!-- Espaciador flexible - empuja el contenido hacia abajo -->
+    <div class="flex-grow"></div>
+
+    <!-- ========================================
+      CORONA DECORATIVA
+      - Imagen decorativa centrada
+      - Tamaño responsive
+    ======================================== -->
+    <div class="w-16 h-16 md:w-20 md:h-20 mb-6 md:mb-8">
+      <img 
+        src={config.imagenCorona}
+        alt={config.altCorona}
+        class="w-full h-full object-contain"
+        loading="eager"
+      />
+    </div>
+
+    <!-- ========================================
+      TÍTULOS PRINCIPALES
+      - "MIS XV AÑOS" con fuente Crimson
+      - Nombre con fuente Great Vibes (cursiva elegante)
+      - Responsive con diferentes tamaños según pantalla
+    ======================================== -->
+    <div class="mb-8">
+      <!-- Título principal -->
+      <h1 
+        class="nombre-oliver font-crimson text-2xl md:text-6xl lg:text-7xl text-white drop-shadow-2xl leading-tight opacity-0 mb-4 md:mb-6"
+        style="transform: translateY(30px);"
+      >
+        {config.titulo}
+      </h1>
+      
+      <!-- Nombre de la quinceañera -->
+      <h2 
+        class="nombre-susy font-great-vibes text-5xl md:text-7xl lg:text-8xl text-white drop-shadow-2xl leading-tight opacity-0"
+        style="transform: translateY(30px);"
+      >
+        {config.nombreQuinceañera}
+      </h2>
+    </div>
+
+    <!-- ========================================
+      FECHA DEL EVENTO
+      - Diseño de píldora con iconos de calendario
+      - Fondo con efecto glassmorphism
+      - Bordes semitransparentes
+    ======================================== -->
+    <div 
+      class="fecha-boda mb-4 md:mb-20 flex items-center gap-3 px-6 py-3 rounded-full border border-white/40 backdrop-blur-sm bg-white/10 opacity-0"
+      style="transform: translateY(20px);"
+    >
+      <!-- Icono de calendario izquierdo -->
+      <svg 
+        class="w-5 h-5 text-white/80" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
+        />
+      </svg>
+      
+      <!-- Texto de la fecha -->
+      <time 
+        datetime="2026-01-18"
+        class="text-white text-base md:text-lg tracking-wider font-light"
+      >
+        {config.fecha}
+      </time>
+      
+      <!-- Icono de calendario derecho -->
+      <svg 
+        class="w-5 h-5 text-white/80" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
+        />
+      </svg>
+    </div>
+
+
+    <Reproductor/>
+
+  </div>
+
+  <!-- ========================================
+    INDICADOR DE SCROLL
+    - Flecha animada que indica "desplázate hacia abajo"
+    - Posición fija en la parte inferior
+  ======================================== -->
+  <div 
+    class="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 z-10 opacity-0"
+    style="transform: translate(-50%, -10px);"
+    aria-label="Desplázate hacia abajo"
+  >
+    <svg 
+      class="w-6 h-6 text-white/60 animate-bounce" 
+      fill="none" 
+      stroke="currentColor" 
+      viewBox="0 0 24 24"
+    >
+      <path 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        stroke-width="2" 
+        d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+      />
+    </svg>
+  </div>
+</section>
+
+<!-- =============================================================================
+  ESTILOS PERSONALIZADOS
+============================================================================= -->
+<style>
+  /* Sombras mejoradas para los títulos */
+  h1, h2 {
+    text-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.5),
+      0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Ajustes para dispositivos móviles */
+  @media (max-width: 640px) {
+    h1, h2 {
+      text-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.7),
+        0 1px 5px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  /* Animación suave para el scroll indicator */
+  @keyframes bounce-soft {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(10px);
+    }
+  }
+
+  .scroll-indicator svg {
+    animation: bounce-soft 2s ease-in-out infinite;
+  }
+</style>
+
+<!-- =============================================================================
+  ANIMACIONES CON GSAP
+  - Animaciones de entrada simultáneas para todos los elementos
+  - Efectos de hover en los nombres (solo desktop)
+  - Parallax en la imagen de fondo al hacer scroll
+============================================================================= -->
+<script>
+  import { gsap } from 'gsap';
+
+  // =========================================================
+  // INICIALIZACIÓN - Esperar a que el DOM esté listo
+  // =========================================================
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    // =========================================================
+    // TIMELINE PRINCIPAL
+    // Todas las animaciones comienzan simultáneamente (delay: 0)
+    // =========================================================
+    const tl = gsap.timeline({ 
+      defaults: { 
+        ease: 'power3.out' 
+      } 
+    });
+
+    // --- Fade in de la imagen de fondo ---
+    tl.to('.hero-bg', {
+      opacity: 1,
+      duration: 1.5,
+      ease: 'power2.out'
+    }, 0);
+
+    // --- Zoom sutil de la imagen (de 110% a 100%) ---
+    tl.fromTo('.hero-bg img',
+      { scale: 1.1 },
+      { 
+        scale: 1, 
+        duration: 2, 
+        ease: 'power2.out' 
+      }
+    , 0);
+
+    // --- Animación del título "MIS XV AÑOS" ---
+    tl.to('.nombre-oliver', {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 1.5,
+      ease: 'power4.out'
+    }, 0);
+
+    // --- Animación del nombre de la quinceañera ---
+    tl.to('.nombre-susy', {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 1.5,
+      ease: 'power4.out'
+    }, 0);
+
+    // --- Animación de la fecha ---
+    tl.to('.fecha-boda', {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 1.2,
+      ease: 'back.out(1.2)'
+    }, 0);
+
+    // --- Animación del indicador de scroll ---
+    tl.to('.scroll-indicator', {
+      y: 0,
+      opacity: 1,
+      duration: 1
+    }, 0);
+
+    // =========================================================
+    // EFECTO PARALLAX EN SCROLL
+    // La imagen de fondo se mueve más lento que el scroll
+    // =========================================================
+    let ticking = false;
+    
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.scrollY;
+          const heroImage = document.querySelector('.hero-bg img');
+          
+          if (heroImage && scrolled < window.innerHeight) {
+            gsap.to(heroImage, {
+              y: scrolled * 0.5,
+              duration: 0.5,
+              ease: 'power1.out'
+            });
+          }
+          
+          ticking = false;
+        });
+        
+        ticking = true;
+      }
+    });
+
+    // =========================================================
+    // EFECTOS HOVER EN NOMBRES (solo en desktop)
+    // Agranda sutilmente los nombres al pasar el mouse
+    // =========================================================
+    if (window.innerWidth > 768) {
+      const nombreOliver = document.querySelector('.nombre-oliver');
+      const nombreSusy = document.querySelector('.nombre-susy');
+
+      [nombreOliver, nombreSusy].forEach(nombre => {
+        if (!nombre) return;
+
+        // Hover enter - agranda el elemento
+        nombre.addEventListener('mouseenter', () => {
+          gsap.to(nombre, {
+            scale: 1.05,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+
+        // Hover leave - vuelve al tamaño normal
+        nombre.addEventListener('mouseleave', () => {
+          gsap.to(nombre, {
+            scale: 1,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+      });
+    }
+
+    // =========================================================
+    // OCULTAR SCROLL INDICATOR AL HACER SCROLL
+    // =========================================================
+    window.addEventListener('scroll', () => {
+      const scrollIndicator = document.querySelector('.scroll-indicator');
+      if (scrollIndicator && window.scrollY > 100) {
+        gsap.to(scrollIndicator, {
+          opacity: 0,
+          duration: 0.3
+        });
+      }
+    }, { once: true });
+  });
+</script>

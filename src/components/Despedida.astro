@@ -1,0 +1,124 @@
+---
+// =============================================================================
+// ConfirmarAsistencia.astro - Confirmación directa (sin config)
+// =============================================================================
+---
+
+<section 
+  class="relative w-full min-h-screen flex justify-center  px-4 overflow-hidden"
+  aria-label="Confirmar asistencia"
+  id="confirmar-asistencia-section"
+>
+  
+  <!-- FONDO FIJO -->
+  <div class="invitacion-bg fixed inset-0 opacity-0 invisible" style="z-index: -10;">
+    <img 
+      src="/imagenes/fondo2.webp"
+      alt="Fondo elegante de invitación"
+      class="w-full h-full object-cover" 
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-black/10"></div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="invitacion-content relative z-10 max-w-lg mx-auto text-center opacity-0" style="transform: translateY(30px);">
+    
+    <h3 class="font-great-vibes text-3xl md:text-4xl text-[#7B1E3A] mb-6 font-bold">
+        Confirmar asistencia
+      </h3>
+
+    <!-- <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6">
+      <img 
+        src="/imagenes/icono-formulario.svg"
+        alt="Icono de formulario"
+        class="w-full h-full object-contain"
+        loading="lazy"
+      />
+    </div> -->
+
+    <p class="font-charm text-lg md:text-xl text-gray-800 mb-8 leading-relaxed">
+      Tu presencia es muy importante para nosotros, por favor confirma tu asistencia.
+    </p>
+
+    <a 
+      href="https://wa.me/TU_NUMERO"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 bg-[#7B1E3A] hover:bg-[#5a162b] text-white font-charm text-lg md:text-xl py-3 px-8 rounded-full transition-colors duration-300 shadow-md"
+    >
+      <img 
+        src="/imagenes/wa.png"
+        alt="Icono de WhatsApp"
+        class="w-6 h-6"
+        loading="lazy"
+      />
+      CONFIRMAR
+    </a>
+
+    <p class="font-great-vibes text-4xl md:text-3xl text-[#7B1E3A] mt-12 drop-shadow-lg">
+      Te esperamos...!
+    </p>
+
+  </div>
+</section>
+
+<style>
+  .invitacion-content h2,
+  .invitacion-content p {
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+  }
+
+  @media (max-width: 640px) {
+    .invitacion-content {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+  }
+</style>
+
+<script is:client>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.getElementById('confirmar-asistencia-section');
+    const bg = section?.querySelector('.invitacion-bg');
+
+    if (!bg || !section) return;
+
+    // Fondo: aparece y desaparece al hacer scroll
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top bottom',
+      end: 'bottom top',
+      onEnter: () => {
+        gsap.to(bg, { visibility: 'visible', opacity: 1, duration: 0.8, ease: 'power2.out' });
+      },
+      onLeave: () => {
+        gsap.to(bg, { opacity: 0, duration: 0.5, onComplete: () => gsap.set(bg, { visibility: 'hidden' }) });
+      },
+      onEnterBack: () => {
+        gsap.to(bg, { visibility: 'visible', opacity: 1, duration: 0.8, ease: 'power2.out' });
+      },
+      onLeaveBack: () => {
+        gsap.to(bg, { opacity: 0, duration: 0.5, onComplete: () => gsap.set(bg, { visibility: 'hidden' }) });
+      }
+    });
+
+    // Contenido: animación al entrar
+    gsap.to('.invitacion-content', {
+      y: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.invitacion-content',
+        start: 'top 75%',
+        toggleActions: 'play none none none'
+      }
+    });
+  });
+</script>
